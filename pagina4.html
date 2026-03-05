@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página 4 - Multimedia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial Black', sans-serif;
+            background: #000;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.5s ease;
+        }
+        
+        .navbar {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.85em;
+        }
+        
+        .navbar a:hover, .navbar a.active {
+            background: #ff00ff;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 3em;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff; }
+            to { text-shadow: 0 0 30px #ff00ff, 0 0 60px #00ffff, 0 0 80px #ff00ff; }
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .media-card {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .media-card h3 {
+            color: #00ffff;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        input[type="color"] {
+            width: 100%;
+            height: 60px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+        input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border: 2px dashed #00ffff;
+            border-radius: 10px;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .preview-box {
+            width: 100%;
+            min-height: 200px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            overflow: hidden;
+        }
+        
+        .preview-box img, .preview-box video {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+        }
+        
+        .preview-box audio {
+            width: 100%;
+        }
+        
+        .color-info {
+            color: white;
+            text-align: center;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body id="body">
+    <nav class="navbar">
+        <a href="index.html">Página 1</a>
+        <a href="pagina2.html">Página 2</a>
+        <a href="pagina3.html">Página 3</a>
+        <a href="pagina4.html" class="active">Página 4</a>
+        <a href="pagina5.html">Página 5</a>
+        <a href="pagina6.html">Página 6</a>
+        <a href="pagina7.html">Página 7</a>
+        <a href="pagina8.html">Página 8</a>
+    </nav>
+    
+    <div class="container">
+        <h1>🎨 PÁGINA 4 - MULTIMEDIA</h1>
+        
+        <div class="media-grid">
+            <div class="media-card">
+                <h3>🎨 Selector de Color</h3>
+                <input type="color" id="colorPicker" value="#ff00ff" onchange="cambiarColor()">
+                <div id="colorInfo" class="color-info">#ff00ff</div>
+            </div>
+            
+            <div class="media-card">
+                <h3>🖼️ Cargar Imagen</h3>
+                <input type="file" id="imgInput" accept="image/*" onchange="cargarImagen()">
+                <div id="imgPreview" class="preview-box">Vista previa de imagen</div>
+            </div>
+            
+            <div class="media-card">
+                <h3>🎵 Cargar Audio</h3>
+                <input type="file" id="audioInput" accept="audio/*" onchange="cargarAudio()">
+                <div id="audioPreview" class="preview-box">
+                    <span>Vista previa de audio</span>
+                </div>
+            </div>
+            
+            <div class="media-card">
+                <h3>🎬 Cargar Video</h3>
+                <input type="file" id="videoInput" accept="video/*" onchange="cargarVideo()">
+                <div id="videoPreview" class="preview-box">Vista previa de video</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function cambiarColor() {
+            const color = document.getElementById('colorPicker').value;
+            document.getElementById('body').style.background = `linear-gradient(135deg, ${color}22, ${color}44)`;
+            document.getElementById('colorInfo').textContent = color.toUpperCase();
+            console.log('Color seleccionado:', color);
+        }
+        
+        function cargarImagen() {
+            const input = document.getElementById('imgInput');
+            const preview = document.getElementById('imgPreview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Imagen cargada">`;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        function cargarAudio() {
+            const input = document.getElementById('audioInput');
+            const preview = document.getElementById('audioPreview');
+            
+            if (input.files && input.files[0]) {
+                const url = URL.createObjectURL(input.files[0]);
+                preview.innerHTML = `<audio controls src="${url}"></audio>`;
+            }
+        }
+        
+        function cargarVideo() {
+            const input = document.getElementById('videoInput');
+            const preview = document.getElementById('videoPreview');
+            
+            if (input.files && input.files[0]) {
+                const url = URL.createObjectURL(input.files[0]);
+                preview.innerHTML = `<video controls src="${url}"></video>`;
+            }
+        }
+    </script>
+</body>
+</html>

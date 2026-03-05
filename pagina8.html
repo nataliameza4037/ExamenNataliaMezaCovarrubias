@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página 8 - Filtro de Precios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #000000 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Navegación */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+            text-align: center;
+        }
+
+        nav a {
+            color: #000000;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+
+        nav a:hover, nav a.active {
+            background: #000000;
+            color: rgb(255, 255, 255);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+        }
+
+        /* Panel de filtros */
+        .filter-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+
+        input[type="number"] {
+            width: 100px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        input[type="range"] {
+            width: 250px;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+        }
+
+        .price-display {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            color: #000000;
+            font-weight: bold;
+            min-width: 200px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #000000 0%, #000000 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-reset {
+            background: #000000;
+        }
+
+        /* Grid de productos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 150px;
+            background: linear-gradient(135deg, #000000 0%, #000000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .product-category {
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #ff0000;
+            font-weight: bold;
+        }
+
+        .stats {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .no-results {
+            text-align: center;
+            color: white;
+            font-size: 1.5em;
+            padding: 50px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">🏠 Página 1</a>
+        <a href="pagina2.html">🔐 Página 2</a>
+        <a href="pagina3.html">📅 Página 3</a>
+        <a href="pagina4.html">🎨 Página 4</a>
+        <a href="pagina5.html">📝 Página 5</a>
+        <a href="pagina6.html">🔍 Página 6</a>
+        <a href="pagina7.html">📚 Página 7</a>
+        <a href="pagina8.html" class="active">🛒 Página 8</a>
+    </nav>
+
+    <div class="container">
+        <h1>🛍️ Tienda Virtual</h1>
+        <p class="subtitle">Filtro de precios con 55 artículos</p>
+
+        <div class="filter-panel">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Precio Mínimo</label>
+                    <input type="number" id="minPrice" value="0" min="0" max="1000">
+                </div>
+
+                <div class="filter-group">
+                    <label>Rango Máximo</label>
+                    <input type="range" id="priceRange" min="0" max="1000" value="1000">
+                </div>
+
+                <div class="filter-group">
+                    <label>Precio Máximo</label>
+                    <input type="number" id="maxPrice" value="1000" min="0" max="1000">
+                </div>
+
+                <div class="price-display">
+                    $<span id="displayMin">0</span> - $<span id="displayMax">1000</span>
+                </div>
+
+                <button class="btn" id="btnFilter">🔍 Filtrar</button>
+                <button class="btn btn-reset" id="btnReset">🔄 Reset</button>
+            </div>
+        </div>
+
+        <div class="stats" id="stats">Mostrando 55 artículos</div>
+
+        <div class="no-results" id="noResults">
+            😕 No se encontraron productos en este rango
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <script>
+        // 55 artículos con precios variados
+        const products = [
+            { name: "Auriculares Bluetooth", category: "Tecnología", price: 89.99, emoji: "🎧" },
+            { name: "Teclado Mecánico RGB", category: "Computación", price: 129.50, emoji: "⌨️" },
+            { name: "Mouse Gamer", category: "Computación", price: 45.00, emoji: "🖱️" },
+            { name: "Monitor 4K 27", category: "Tecnología", price: 399.99, emoji: "🖥️" },
+            { name: "Webcam HD", category: "Accesorios", price: 59.99, emoji: "📷" },
+            { name: "Disco Duro 2TB", category: "Almacenamiento", price: 79.99, emoji: "💾" },
+            { name: "USB 128GB", category: "Almacenamiento", price: 24.99, emoji: "🔌" },
+            { name: "Router WiFi 6", category: "Redes", price: 149.99, emoji: "📡" },
+            { name: "Cámara Seguridad", category: "Seguridad", price: 199.00, emoji: "🔒" },
+            { name: "Smartwatch", category: "Wearables", price: 179.99, emoji: "⌚" },
+            { name: "Tablet 10 pulgadas", category: "Tecnología", price: 299.99, emoji: "📱" },
+            { name: "Cargador Wireless", category: "Accesorios", price: 34.99, emoji: "🔋" },
+            { name: "Parlante Bluetooth", category: "Audio", price: 69.99, emoji: "🔊" },
+            { name: "Micrófono Pro", category: "Audio", price: 119.99, emoji: "🎙️" },
+            { name: "Silla Gamer", category: "Muebles", price: 249.99, emoji: "🪑" },
+            { name: "Escritorio Eléctrico", category: "Muebles", price: 449.99, emoji: "🪵" },
+            { name: "Lámpara LED", category: "Hogar", price: 39.99, emoji: "💡" },
+            { name: "Termostato Inteligente", category: "Hogar", price: 199.99, emoji: "🌡️" },
+            { name: "Aspiradora Robot", category: "Hogar", price: 299.00, emoji: "🤖" },
+            { name: "Cafetera Espresso", category: "Cocina", price: 349.99, emoji: "☕" },
+            { name: "Licuadora Pro", category: "Cocina", price: 89.99, emoji: "🥤" },
+            { name: "Freidora Aire", category: "Cocina", price: 129.99, emoji: "🍟" },
+            { name: "Microondas", category: "Cocina", price: 159.99, emoji: "🍲" },
+            { name: "Mini Refrigerador", category: "Cocina", price: 599.99, emoji: "❄️" },
+            { name: "Ventilador Inteligente", category: "Clima", price: 79.99, emoji: "💨" },
+            { name: "Aire Acondicionado", category: "Clima", price: 499.99, emoji: "❄️" },
+            { name: "Calefactor", category: "Clima", price: 59.99, emoji: "🔥" },
+            { name: "Deshumidificador", category: "Clima", price: 189.99, emoji: "💧" },
+            { name: "Purificador Aire", category: "Hogar", price: 249.99, emoji: "🌬️" },
+            { name: "Robot Cortacésped", category: "Jardín", price: 899.99, emoji: "🌿" },
+            { name: "Barbacoa Eléctrica", category: "Jardín", price: 149.99, emoji: "🍖" },
+            { name: "Set Jardín", category: "Jardín", price: 399.99, emoji: "🪴" },
+            { name: "Kit Herramientas", category: "Bricolaje", price: 199.99, emoji: "🔧" },
+            { name: "Taladro Inalámbrico", category: "Bricolaje", price: 89.99, emoji: "🔩" },
+            { name: "Destornilladores", category: "Bricolaje", price: 34.99, emoji: "🪛" },
+            { name: "Caja Herramientas", category: "Bricolaje", price: 69.99, emoji: "🧰" },
+            { name: "Escalera Plegable", category: "Bricolaje", price: 119.99, emoji: "🪜" },
+            { name: "Mochila Antirrobo", category: "Viaje", price: 79.99, emoji: "🎒" },
+            { name: "Maleta Rígida", category: "Viaje", price: 149.99, emoji: "🧳" },
+            { name: "Neceser Viaje", category: "Viaje", price: 29.99, emoji: "👝" },
+            { name: "Almohada Viaje", category: "Viaje", price: 24.99, emoji: "🛏️" },
+            { name: "Botella Térmica", category: "Deportes", price: 34.99, emoji: "🍶" },
+            { name: "Esterilla Yoga", category: "Deportes", price: 44.99, emoji: "🧘" },
+            { name: "Pesas Ajustables", category: "Deportes", price: 99.99, emoji: "🏋️" },
+            { name: "Bicicleta Estática", category: "Deportes", price: 349.99, emoji: "🚴" },
+            { name: "Cinta Correr", category: "Deportes", price: 699.99, emoji: "🏃" },
+            { name: "Set Golf", category: "Deportes", price: 299.99, emoji: "⛳" },
+            { name: "Raqueta Tenis", category: "Deportes", price: 189.99, emoji: "🎾" },
+            { name: "Patines Eléctricos", category: "Movilidad", price: 399.99, emoji: "🛹" },
+            { name: "Scooter Eléctrico", category: "Movilidad", price: 549.99, emoji: "🛴" },
+            { name: "Casco Bicicleta", category: "Seguridad", price: 59.99, emoji: "⛑️" },
+            { name: "Guantes Ciclismo", category: "Accesorios", price: 29.99, emoji: "🧤" },
+            { name: "Gafas Sol Deportivas", category: "Accesorios", price: 89.99, emoji: "🕶️" },
+            { name: "Proyector HD", category: "Tecnología", price: 279.99, emoji: "📽️" },
+            { name: "Batería Externa", category: "Tecnología", price: 49.99, emoji: "🔋" },
+            { name: "Soporte Laptop", category: "Accesorios", price: 35.99, emoji: "💻" }
+        ];
+
+        function renderProducts(list) {
+            const grid = document.getElementById('productsGrid');
+            const noResults = document.getElementById('noResults');
+            const stats = document.getElementById('stats');
+            
+            grid.innerHTML = '';
+            
+            if (list.length === 0) {
+                noResults.style.display = 'block';
+                stats.textContent = 'No hay artículos para mostrar';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            stats.textContent = `Mostrando ${list.length} de ${products.length} artículos`;
+            
+            list.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image">${p.emoji}</div>
+                    <div class="product-info">
+                        <div class="product-category">${p.category}</div>
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-price">$${p.price.toFixed(2)}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updateMaxInput(val) {
+            document.getElementById('maxPrice').value = val;
+            document.getElementById('displayMax').textContent = val;
+        }
+
+        function updateRange(val) {
+            document.getElementById('priceRange').value = val;
+            document.getElementById('displayMax').textContent = val;
+        }
+
+        function applyFilter() {
+            const min = parseFloat(document.getElementById('minPrice').value) || 0;
+            const max = parseFloat(document.getElementById('maxPrice').value) || 1000;
+            
+            document.getElementById('displayMin').textContent = min;
+            document.getElementById('displayMax').textContent = max;
+            
+            const filtered = products.filter(p => p.price >= min && p.price <= max);
+            renderProducts(filtered);
+        }
+
+        function resetFilter() {
+            document.getElementById('minPrice').value = 0;
+            document.getElementById('maxPrice').value = 1000;
+            document.getElementById('priceRange').value = 1000;
+            document.getElementById('displayMin').textContent = '0';
+            document.getElementById('displayMax').textContent = '1000';
+            renderProducts(products);
+        }
+
+        // Event listeners
+        document.getElementById('priceRange').addEventListener('input', function() {
+            updateMaxInput(this.value);
+        });
+
+        document.getElementById('maxPrice').addEventListener('input', function() {
+            updateRange(this.value);
+        });
+
+        document.getElementById('btnFilter').addEventListener('click', applyFilter);
+        document.getElementById('btnReset').addEventListener('click', resetFilter);
+
+        // Inicializar
+        renderProducts(products);
+    </script>
+</body>
+</html>

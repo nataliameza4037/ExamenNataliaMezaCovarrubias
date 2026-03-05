@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página 6 - Buscador Global</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .navbar {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            border: 1px solid #0f3460;
+        }
+        
+        .navbar a {
+            color: #6911b7;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        /* ERROR 1 CORREGIDO: faltaba ; después de #6911b7 */
+        .navbar a:hover, .navbar a.active {
+            background: #6911b7;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #6911b7;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .search-box {
+            background: #16213e;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border: 2px solid #0f3460;
+            border-radius: 50px;
+            background: #1a1a2e;
+            color: white;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .search-input:focus {
+            border-color: #6911b7;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+        }
+        
+        .results-container {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .result-card {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #6911b7;
+            display: none;
+        }
+        
+        .result-card.visible {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-card h3 {
+            color: #6911b7;
+            margin-bottom: 10px;
+        }
+        
+        .result-card a {
+            color: #533483;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .result-card a:hover {
+            text-decoration: underline;
+        }
+        
+        /* ERROR 2 CORREGIDO: faltaba ; después de #6911b7 */
+        .highlight {
+            background: #6911b7;
+            color: white;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .stats {
+            text-align: center;
+            color: #888;
+            margin-top: 20px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html">Página 1</a>
+        <a href="pagina2.html">Página 2</a>
+        <a href="pagina3.html">Página 3</a>
+        <a href="pagina4.html">Página 4</a>
+        <a href="pagina5.html">Página 5</a>
+        <a href="pagina6.html" class="active">Página 6</a>
+        <a href="pagina7.html">Página 7</a>
+        <a href="pagina8.html">Página 8</a>
+    </nav>
+    
+    <div class="container">
+        <h1>🔍 PÁGINA 6 - BUSCADOR GLOBAL</h1>
+        
+        <div class="search-box">
+            <input type="text" 
+                   class="search-input" 
+                   id="searchInput" 
+                   placeholder="Buscar en todo el sitio web..." 
+                   onkeyup="buscarGlobal()">
+        </div>
+        
+        <div class="results-container" id="results">
+            <!-- Los resultados se generan dinámicamente -->
+        </div>
+        
+        <div class="no-results" id="noResults">
+            No se encontraron resultados para tu búsqueda.
+        </div>
+        
+        <div class="stats" id="stats"></div>
+    </div>
+    
+    <script>
+        // Base de datos de contenido de todas las páginas
+        const siteContent = [
+            {
+                page: "Página 1 - Inicio",
+                url: "index.html",
+                content: "sitio web navegación principal examen desarrollo web inicio paginas formulario archivo txt calendario pdf multimedia color imagen audio video texto palabras buscador filtro precios articulos"
+            },
+            {
+                page: "Página 2 - Formulario",
+                url: "pagina2.html",
+                content: "formulario email correo electronico password contraseña archivo texto txt consola carga datos procesar entrada input seguridad login autenticacion"
+            },
+            {
+                page: "Página 3 - Calendario y PDF",
+                url: "pagina3.html",
+                content: "calendario fecha selector date input pdf documento visor archivo cargar visualizacion navegador vista previa documentos fechas calendario"
+            },
+            {
+                page: "Página 4 - Multimedia",
+                url: "pagina4.html",
+                content: "multimedia color picker selector imagen foto picture audio musica sonido video mp4 mp3 avi visualizacion carga archivos media reproductor"
+            },
+            {
+                page: "Página 5 - Texto 255",
+                url: "pagina5.html",
+                content: "tecnologia sociedad avances digitales comunicacion personas internet redes dispositivo poder computacional naturaleza lecciones profundas resiliencia arboles tormentas sabiduria ancestral montañas inspiran respeto humildad rios demuestran persistencia inquebrantable obstaculos arte expresa emociones alma pintores capturan momentos efimeros musicos componen melodias conmovedoras escritores construyen mundos imaginarios ciencia busca verdades metodos rigurosos cientificos investigan fenomenos descubrimiento puertas conocimiento curiosidad impulsa progreso valores eticos guian honestidad fortalece relaciones compasion semejantes genera comunidades justicia promueve equilibrio futuro depende elecciones educacion prepara jovenes desafios sostenibilidad garantiza supervivencia planeta innovacion oportunidades mejora"
+            },
+            {
+                page: "Página 6 - Buscador",
+                url: "pagina6.html",
+                content: "buscador global search busqueda texto encontrar ubicar navegacion sitio web resultados finder localizar query buscar"
+            },
+            {
+                page: "Página 7 - Texto 327",
+                url: "pagina7.html",
+                content: "historia civilizaciones antiguas egipcios construyeron piramides majestuas griegos desarrollaron filosofia democracia romanos establecieron leyes imperiales edad media castillos caballeros renacimiento arte florecio ilustracion razon encendio luces revolucion industrial maquinas cambiaron mundo moderna tecnologia acelera transformaciones futuro promete desafios oportunidades crecimiento personal desarrollo individual autoconocimiento disciplina constancia esfuerzo dedicacion metas objetivos logros exito fracaso aprendizaje experiencia sabiduria madurez equilibrio emocional inteligencia adaptabilidad creatividad innovacion liderazgo trabajo equipo colaboracion comunicacion asertiva empatia comprension tolerancia respeto diversidad inclusion igualdad libertad justicia paz seguridad prosperidad bienestar calidad vida salud nutricion ejercicio descanso meditacion mindfulness gratitud positividad optimismo esperanza confianza autoestima autenticidad honestidad integridad responsabilidad compromiso perseverancia resiliencia valentia coraje determinacion pasion entusiasmo motivacion inspiracion transformacion evolucion cambio progreso"
+            },
+            {
+                page: "Página 8 - Filtro Precios",
+                url: "pagina8.html",
+                content: "filtro precios rango articulos productos compras tienda catalogo lista items electronica ropa hogar deportes juguetes libros musica peliculas software hardware computadoras celulares tablets audifonos camaras consolas videojuegos muebles decoracion cocina herramientas jardin mascotas belleza salud fitness alimentos bebidas ofertas descuentos carrito compra"
+            }
+        ];
+        
+        function buscarGlobal() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('results');
+            const noResults = document.getElementById('noResults');
+            const stats = document.getElementById('stats');
+            
+            resultsContainer.innerHTML = '';
+            
+            if (query.length < 2) {
+                noResults.style.display = 'none';
+                stats.textContent = '';
+                return;
+            }
+            
+            let resultadosEncontrados = 0;
+            
+            siteContent.forEach(item => {
+                if (item.content.includes(query)) {
+                    resultadosEncontrados++;
+                    const card = document.createElement('div');
+                    card.className = 'result-card visible';
+                    
+                    // Resaltar coincidencias
+                    const regex = new RegExp(`(${query})`, 'gi');
+                    const highlightedContent = item.content.replace(regex, '<span class="highlight">$1</span>');
+                    
+                    card.innerHTML = `
+                        <h3>📄 ${item.page}</h3>
+                        <p>${highlightedContent.substring(0, 200)}...</p>
+                        <a href="${item.url}">Ir a ${item.page} →</a>
+                    `;
+                    
+                    resultsContainer.appendChild(card);
+                }
+            });
+            
+            if (resultadosEncontrados === 0) {
+                noResults.style.display = 'block';
+                stats.textContent = '';
+            } else {
+                noResults.style.display = 'none';
+                stats.textContent = `Se encontraron ${resultadosEncontrados} resultado(s)`;
+            }
+        }
+        
+        // Inicializar
+        window.onload = function() {
+            document.getElementById('searchInput').focus();
+        };
+    </script>
+</body>
+</html>
